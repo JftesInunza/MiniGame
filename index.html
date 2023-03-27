@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Game</title>
+
+    <!-- Classes -->
+    <script src="js/model.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/stack_factory.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="menu-view">
+        <h3>Select Difficulty</h3>
+        <div class="mode-selector">
+            <label for="mode">Easy</label>
+            <input type="radio" name="mode" id="easy">
+
+            <label for="mode">Normal</label>
+            <input type="radio" name="mode" id="normal">
+
+            <label for="mode">Hard</label>
+            <input type="radio" name="mode" id="hard">
+
+            <label for="mode">Extreme</label>
+            <input type="radio" name="mode" id="extreme">
+        </div>
+    </div>
+
+    <div class="game-view">
+        <button class="menu">menu</button>
+        <button class="restart">restart</button>
+        <button class="undo">undo</button>
+        <div id="score">Score: <span>0</span></div>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="resources">
+        <img src="images/marbles.png" alt="marbles-assets" id="marbles">
+    </div>
+</body>
+
+</html>

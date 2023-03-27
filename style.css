@@ -1,0 +1,29 @@
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.menu-view {
+    background-color: blueviolet;
+    display: none;
+}
+
+.game-view {
+    position: relative;
+    background-color: aquamarine;
+    display: block;
+}
+
+.menu,
+.restart,
+.undo,
+#score {
+    position: absolute;
+}
+
+.resources {
+    display: none;
+}
