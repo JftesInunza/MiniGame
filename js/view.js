@@ -50,19 +50,7 @@ class View {
                 }
                 this.drawMarbles(ctx, mtype, marbles_id, stackRect)
             })
-            this.drawGameContainer(ctx)
         });
-    }
-
-    drawGameContainer(ctx) {
-        ctx.strokeStyle = '#fcfcfc'
-        ctx.lineWidth = 3
-        /* ctx.strokeRect(
-            this.margin.left,
-            this.margin.top,
-            this.size.width,
-            this.size.height
-        ) */
     }
 
     selectStackColorFill(ctx, stack_id) {
