@@ -17,8 +17,7 @@ function main() {
         controller.onClick(mouse)
     })
 
-    RandomStacks(8, 12)
-
+    model.setViewState(STATE_MENU)
     let loop = () => {
         view.render(ctx)
         window.requestAnimationFrame(loop)

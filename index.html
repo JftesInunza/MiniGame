@@ -8,38 +8,41 @@
     <title>Mini Game</title>
 
     <!-- Classes -->
+    <script src="js/memory.js"></script>
     <script src="js/model.js"></script>
     <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
     <script src="js/stack_factory.js"></script>
+    <script src="js/menu.js"></script>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/game-view.css">
+    <link rel="stylesheet" href="css/menu-view.css">
     <script src="script.js"></script>
 </head>
 
 <body>
-    <div class="menu-view">
+    <div id="menu-view">
         <h3>Select Difficulty</h3>
         <div class="mode-selector">
-            <label for="mode">Easy</label>
-            <input type="radio" name="mode" id="easy">
+            <input type="radio" name="mode" id="easy" value="easy">
+            <label for="easy">Easy</label>
 
-            <label for="mode">Normal</label>
-            <input type="radio" name="mode" id="normal">
+            <input type="radio" name="mode" id="normal" value="normal" checked="checked">
+            <label for="normal">Normal</label>
 
-            <label for="mode">Hard</label>
-            <input type="radio" name="mode" id="hard">
-
-            <label for="mode">Extreme</label>
-            <input type="radio" name="mode" id="extreme">
+            <input type="radio" name="mode" id="hard" value="hard">
+            <label for="hard">Hard</label>
         </div>
+        <button id="start-btn">Start</button>
     </div>
 
-    <div class="game-view">
-        <button class="menu">menu</button>
-        <button class="restart">restart</button>
-        <button class="undo">undo</button>
-        <div id="score">Score: <span>0</span></div>
+    <div id="game-view">
+        <div class="menu">
+            <input type="image" src="images/menu.svg" id="menu-btn">
+            <input type="image" src="images/restart.svg" id="restart-btn">
+            <input type="image" src="images/undo.svg" id="undo-btn">
+        </div>
         <canvas id="canvas"></canvas>
     </div>
 

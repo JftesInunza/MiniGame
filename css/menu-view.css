@@ -1,0 +1,68 @@
+#menu-view {
+    background-color: blur(8px);
+    border-radius: 20px;
+    box-shadow: inset 1.5px 1.5px 2px 0 rgba(0, 0, 0, 0.15);
+    font-family: sans-serif;
+    height: 450px;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+}
+
+#menu-view h3 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 3px gray;
+}
+
+#start-btn {
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-top: 50px;
+}
+
+#start-btn:hover {
+    color: red;
+}
+
+.mode-selector {
+    display: flex;
+    flex-direction: column;
+}
+
+.mode-selector input[type="radio"] {
+    appearance: none;
+    display: none;
+}
+
+.mode-selector label {
+    background-color: #146C94;
+    border-radius: 15px;
+    color: white;
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 10px 0 10px 0;
+    padding: 5px;
+    box-shadow: 2px 2px 4px black;
+}
+
+.mode-selector label:hover {
+    background-color: #19A7CE;
+    color: #0e4b67;
+}
+
+.mode-selector label:active {
+    box-shadow: 0 2px black;
+    color: #0e4b67;
+    transform: translateY(4px);
+}
+
+.mode-selector input[type="radio"]:checked+label {
+    background-color: #19A7CE;
+    color: #0e4b67;
+}

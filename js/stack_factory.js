@@ -9,9 +9,10 @@ function EmptyStack(length) {
     return empty
 }
 
-function RandomStacks(length, mtype_range) {
-    /*  length:         stack length
-        mtype_range:    range of differents marbles type
+function RandomStacks(length, mtype_range, n_empty) {
+    /*  length          :number of marbles on every stack
+        mtype_range     :range of differents marbles types
+        n_empty         :number of empty stack to push
     */
     let marbles_pool = []
     for (let i = 0; i < length * mtype_range; i++) {
@@ -19,31 +20,52 @@ function RandomStacks(length, mtype_range) {
     }
     marbles_pool.sort(() => { return Math.random() - 0.5 })
 
-    let stack = []
+    let stacks = []
     for (let i = 0; i < mtype_range; i++) {
-        stack.push(marbles_pool.slice(i * length, (i + 1) * length))
+        stacks.push(marbles_pool.slice(i * length, (i + 1) * length))
     }
-    stack.push(EmptyStack(length))
-    stack.push(EmptyStack(length))
-    return stack
+
+    for (let i = 0; i < n_empty; i++) {
+        stacks.push(EmptyStack(length))
+    }
+
+    return {
+        stacks: stacks,
+        numberStacks: mtype_range + n_empty,
+        stackLength: length,
+    }
 }
 
+function GenerateStacks(mode) {
+    switch (mode) {
+        case 'easy':
+            return EasyMode()
+        case 'normal':
+            return NormalMode()
+        case 'hard':
+            return HardMode()
+        default:
+            return []
+    }
+}
 
-function ExtremeModeStacks() {
+function EasyMode() {
+    const length = 4
+    const mtype_range = 5
+    const n_empty = 1
+    return RandomStacks(length, mtype_range, n_empty)
+}
+
+function NormalMode() {
+    const length = 5
+    const mtype_range = 8
+    const n_empty = 2
+    return RandomStacks(length, mtype_range, n_empty)
+}
+
+function HardMode() {
     const length = 6
     const mtype_range = 11
-    let marbles_pool = []
-    for (let i = 0; i < length * mtype_range; i++) {
-        marbles_pool[i] = i % mtype_range
-    }
-    marbles_pool.sort(() => { return Math.random() - 0.5 })
-
-    let stack = []
-    for (let i = 0; i < mtype_range; i++) {
-        stack.push(marbles_pool.slice(i * length, (i + 1) * length))
-    }
-    stack.push(EmptyStack(length))
-    stack.push(EmptyStack(length))
-    stack.push(EmptyStack(length))
-    return stack
+    const n_empty = 3
+    return RandomStacks(length, mtype_range, n_empty)
 }

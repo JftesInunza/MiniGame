@@ -1,11 +1,13 @@
 'use strict'
 
+const STATE_MENU = 'menu'
+const STATE_GAME = 'game'
+const STATE_VICTORY = 'victory'
 const NO_SELECTION = -1
 const STACK_EMPTY = -1
 const STACK_FULL = 0
 const TOP_FORWARD = 1
 const TOP_BACKWARD = -1
-const SCORE_BASE = 100
 const BOX = {
     margin: 5,
     sWidth: 88,         // Sprite Width
@@ -16,11 +18,12 @@ const BOX = {
 
 class Model {
     constructor() {
-        this.listeners = { init: [] }
-        this.stackLength = 5
-        this.stackTypes = 12
-        this.init()
-        window.addEventListener('resize', () => { this.calcSizes() })
+        this.listeners = { viewState: [] }
+    }
+
+    setViewState(state) {
+        this.viewState = state
+        this.notify('viewState')
     }
 
     addEventListener(event, callback) {
@@ -33,26 +36,14 @@ class Model {
         });
     }
 
-    init() {
-        this.stacks = ExtremeModeStacks()
+    init(mode) {
+        const generator = GenerateStacks(mode)
+        this.stacks = generator.stacks
+        this.numberStacks = generator.numberStacks
+        this.stackLength = generator.stackLength
         this.topIndices = this.initTopIndices()
         this.stackSelected = NO_SELECTION
-        this.score = 0
-        this.calcSizes()
-        this.notify('init')
-    }
-
-    calcSizes() {
-        this.stackLength = this.stacks[0].length
-        this.stackTypes = this.stacks.length
-        this.size = {
-            width: (this.stackTypes) * BOX.width + 2 * (this.stackTypes - 1) * BOX.margin,
-            height: (BOX.height + 2 * BOX.margin) * this.stackLength,
-        }
-        this.margin = {
-            top: (window.innerHeight - this.size.height) / 2,
-            left: (window.innerWidth - this.size.width) / 2,
-        }
+        this.calcRects()
     }
 
     forStack(callback) {
@@ -72,13 +63,31 @@ class Model {
         })
     }
 
-    stackRect(id) {
-        return {
-            x: this.margin.left + id * (BOX.width + 2 * BOX.margin),
-            y: this.margin.top,
-            width: BOX.width,
-            height: (BOX.height + 2 * BOX.margin) * this.stacks[id].length
+    calcSizes() {
+        this.size = {
+            width: this.numberStacks * (BOX.width + 2 * BOX.margin) - 2 * BOX.margin,
+            height: (BOX.height + 2 * BOX.margin) * this.stackLength,
         }
+        this.margin = {
+            left: (window.innerWidth - this.size.width) / 2,
+            top: (window.innerHeight - this.size.height) / 2,
+        }
+    }
+
+    calcRects() {
+        this.calcSizes()
+        this.rects = this.stacks.map((stack, id) => {
+            return {
+                x: this.margin.left + id * (BOX.width + 2 * BOX.margin),
+                y: this.margin.top,
+                width: BOX.width,
+                height: (BOX.height + 2 * BOX.margin) * stack.length,
+            }
+        })
+    }
+
+    stackRect(id) {
+        return this.rects[id]
     }
 
     compareTypes(s1, s2) {
@@ -120,13 +129,10 @@ class Model {
         })
     }
 
-    sumScore() {
-        this.score += SCORE_BASE
-    }
-
     removeStack(stack_id) {
         this.stacks.splice(stack_id, 1)
         this.topIndices.splice(stack_id, 1)
-        this.calcSizes()
+        this.numberStacks--
+        this.calcRects()
     }
 }

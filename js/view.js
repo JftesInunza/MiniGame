@@ -4,14 +4,39 @@
 const COLOR_NO_SELECTED = '#146C94'
 const COLOR_SELECTED = '#19A7CE'
 
-
 class View {
     constructor(model) {
         this.model = model
+        this.viewState = {
+            menu: this.showMenuView,
+            game: this.showGameView,
+            victory: this.showVictoryView,
+        }
         this.marblesImgs = document.querySelector('#marbles')
+        this.model.addEventListener('viewState', () => { this.viewState[this.model.viewState]() })
+    }
+
+    showGameView() {
+        console.log('game view')
+        document.querySelector('#menu-view').style.display = 'none'
+        document.querySelector('#game-view').style.display = 'block'
+    }
+
+    showMenuView() {
+        console.log('menu view')
+        document.querySelector('#menu-view').style.display = 'block'
+        document.querySelector('#game-view').style.display = 'none'
+    }
+
+    showVictoryView() {
+        console.log('victory view')
     }
 
     render(ctx) {
+        if (this.model.viewState != STATE_GAME) {
+            return
+        }
+
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
         this.model.forStack((stack, stack_id) => {
@@ -32,12 +57,12 @@ class View {
     drawGameContainer(ctx) {
         ctx.strokeStyle = '#fcfcfc'
         ctx.lineWidth = 3
-        ctx.strokeRect(
-            this.model.margin.left,
-            this.model.margin.top,
-            this.model.size.width,
-            this.model.size.height
-        )
+        /* ctx.strokeRect(
+            this.margin.left,
+            this.margin.top,
+            this.size.width,
+            this.size.height
+        ) */
     }
 
     selectStackColorFill(ctx, stack_id) {
