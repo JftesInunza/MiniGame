@@ -65,7 +65,7 @@ class Model {
 
     calcSizes() {
         this.size = {
-            width: this.numberStacks * (BOX.width + 2 * BOX.margin) - 2 * BOX.margin,
+            width: this.numberStacks * BOX.width + 2 * (this.numberStacks - 1) * BOX.margin,
             height: (BOX.height + 2 * BOX.margin) * this.stackLength,
         }
         this.margin = {

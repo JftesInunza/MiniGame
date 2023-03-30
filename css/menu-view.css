@@ -24,6 +24,7 @@
     font-size: 2rem;
     font-weight: 900;
     margin-top: 50px;
+    padding: 3px 25px 3px 25px;
 }
 
 #start-btn:hover {
@@ -43,12 +44,12 @@
 .mode-selector label {
     background-color: #146C94;
     border-radius: 15px;
+    box-shadow: 2px 2px 4px black;
     color: white;
     font-size: 2rem;
     font-weight: 900;
     margin: 10px 0 10px 0;
     padding: 5px;
-    box-shadow: 2px 2px 4px black;
 }
 
 .mode-selector label:hover {

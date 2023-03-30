@@ -9,19 +9,28 @@ function EmptyStack(length) {
     return empty
 }
 
-function RandomStacks(length, mtype_range, n_empty) {
+function RandomStacks({
+    length,
+    mtype_range,
+    n_empty,
+    duplicates,
+}) {
     /*  length          :number of marbles on every stack
         mtype_range     :range of differents marbles types
         n_empty         :number of empty stack to push
     */
     let marbles_pool = []
     for (let i = 0; i < length * mtype_range; i++) {
-        marbles_pool[i] = i % mtype_range
+        marbles_pool.push(i % mtype_range)
+    }
+
+    for (let i = 0; i < length * duplicates; i++) {
+        marbles_pool.push(i % duplicates)
     }
     marbles_pool.sort(() => { return Math.random() - 0.5 })
 
     let stacks = []
-    for (let i = 0; i < mtype_range; i++) {
+    for (let i = 0; i < mtype_range + duplicates; i++) {
         stacks.push(marbles_pool.slice(i * length, (i + 1) * length))
     }
 
@@ -31,7 +40,7 @@ function RandomStacks(length, mtype_range, n_empty) {
 
     return {
         stacks: stacks,
-        numberStacks: mtype_range + n_empty,
+        numberStacks: mtype_range + n_empty + duplicates,
         stackLength: length,
     }
 }
@@ -50,22 +59,28 @@ function GenerateStacks(mode) {
 }
 
 function EasyMode() {
-    const length = 4
-    const mtype_range = 5
-    const n_empty = 1
-    return RandomStacks(length, mtype_range, n_empty)
+    return RandomStacks({
+        length: 4,
+        mtype_range: 3,
+        n_empty: 2,
+        duplicates: 3,
+    })
 }
 
 function NormalMode() {
-    const length = 5
-    const mtype_range = 8
-    const n_empty = 2
-    return RandomStacks(length, mtype_range, n_empty)
+    return RandomStacks({
+        length: 5,
+        mtype_range: 6,
+        n_empty: 2,
+        duplicates: 2,
+    })
 }
 
 function HardMode() {
-    const length = 6
-    const mtype_range = 11
-    const n_empty = 3
-    return RandomStacks(length, mtype_range, n_empty)
+    return RandomStacks({
+        length: 6,
+        mtype_range: 9,
+        n_empty: 3,
+        duplicates: 3,
+    })
 }
