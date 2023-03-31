@@ -19,13 +19,13 @@ class View {
     showGameView() {
         console.log('game view')
         document.querySelector('#menu-view').style.display = 'none'
-        document.querySelector('#game-view').style.display = 'block'
+        document.querySelector('.menu').style.display = 'block'
     }
 
     showMenuView() {
         console.log('menu view')
         document.querySelector('#menu-view').style.display = 'block'
-        document.querySelector('#game-view').style.display = 'none'
+        document.querySelector('.menu').style.display = 'none'
     }
 
     showVictoryView() {
@@ -36,8 +36,6 @@ class View {
         if (this.model.viewState != STATE_GAME) {
             return
         }
-
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
         this.model.forStack((stack, stack_id) => {
             const stackRect = this.model.stackRect(stack_id)

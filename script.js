@@ -11,6 +11,7 @@ function main() {
 
     let model = new Model()
     let view = new View(model)
+    let bg = new Background()
 
     let controller = new Controller(model)
     window.addEventListener('click', mouse => {
@@ -19,6 +20,8 @@ function main() {
 
     model.setViewState(STATE_MENU)
     let loop = () => {
+        bg.update()
+        bg.render(ctx)
         view.render(ctx)
         window.requestAnimationFrame(loop)
     }

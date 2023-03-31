@@ -1,19 +1,21 @@
 #menu-view {
-    background-color: blur(8px);
+    background-color: rgba(5, 5, 5, 0.80);
     border-radius: 20px;
-    box-shadow: inset 1.5px 1.5px 2px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 4px black;
     font-family: sans-serif;
-    height: 450px;
+    height: 440px;
     left: 50%;
     position: absolute;
     text-align: center;
-    top: 50%;
+    top: 42%;
     transform: translate(-50%, -50%);
     width: 350px;
+    z-index: 2;
 }
 
 #menu-view h3 {
     font-size: 3rem;
+    color: white;
     text-shadow: 2px 2px 3px gray;
 }
 
@@ -42,28 +44,29 @@
 }
 
 .mode-selector label {
-    background-color: #146C94;
+    background-color: #0e4b67;
     border-radius: 15px;
-    box-shadow: 2px 2px 4px black;
+    box-shadow: 2px 2px 4px gray;
     color: white;
     font-size: 2rem;
     font-weight: 900;
-    margin: 10px 0 10px 0;
+    margin: 10px 0 10px 9%;
     padding: 5px;
+    width: 80%;
 }
 
 .mode-selector label:hover {
     background-color: #19A7CE;
-    color: #0e4b67;
+    color: #1c1946;
 }
 
 .mode-selector label:active {
     box-shadow: 0 2px black;
-    color: #0e4b67;
+    color: #1c1946;
     transform: translateY(4px);
 }
 
 .mode-selector input[type="radio"]:checked+label {
     background-color: #19A7CE;
-    color: #0e4b67;
+    color: #1c1946;
 }
