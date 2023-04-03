@@ -17,7 +17,10 @@ const BOX = {
 
 class Model {
     constructor() {
-        this.listeners = { viewState: [] }
+        this.listeners = {
+            state: [],
+            init: [],
+        }
     }
 
     addEventListener(event, callback) {
@@ -37,8 +40,7 @@ class Model {
         this.stackLength = generator.stackLength
         this.topIndices = this.initTopIndices()
         this.stackSelected = NO_SELECTION
-        this.calcRects()
-        this.setState(STATE_GAME)
+        this.notify('init')
     }
 
     forStack(callback) {
@@ -55,29 +57,6 @@ class Model {
                 }
             }
             return stack.length
-        })
-    }
-
-    calcSizes() {
-        this.size = {
-            width: this.numberStacks * BOX.width + 2 * (this.numberStacks - 1) * BOX.margin,
-            height: (BOX.height + 2 * BOX.margin) * this.stackLength,
-        }
-        this.margin = {
-            left: (window.innerWidth - this.size.width) / 2,
-            top: (window.innerHeight - this.size.height) / 2,
-        }
-    }
-
-    calcRects() {
-        this.calcSizes()
-        this.rects = this.stacks.map((stack, id) => {
-            return {
-                x: this.margin.left + id * (BOX.width + 2 * BOX.margin),
-                y: this.margin.top,
-                width: BOX.width,
-                height: (BOX.height + 2 * BOX.margin) * stack.length,
-            }
         })
     }
 
@@ -104,8 +83,12 @@ class Model {
     }
 
     setState(state) {
-        this.viewState = state
-        this.notify('viewState')
+        this.state = state
+        this.notify('state')
+    }
+
+    setRects(rects) {
+        this.rects = rects
     }
 
     moveMarbles(from, to) {

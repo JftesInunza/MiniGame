@@ -2,7 +2,7 @@
 
 
 function main() {
-    let canvas = document.querySelector('#canvas')
+    const canvas = document.querySelector('#canvas')
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
@@ -10,25 +10,34 @@ function main() {
     const ctx = canvas.getContext("2d")
 
     const model = new Model()
-    const view = new GameView(model)
-    const bg = new Background()
-    const sc = new StateController(model)
-    const controller = new GameLogic(model)
+    const game_view = new GameView(model)
+    const background = new Background()
+    const state_ctrl = new StateController(model)
+    const game_logic = new GameLogic(model)
+    const viewport = new Viewport(model, canvas)
 
-    model.addEventListener('viewState', () => {
-        sc.onStateChanged()
+    model.addEventListener('state', () => {
+        state_ctrl.onStateChanged()
+    })
+
+    model.addEventListener('init', () => {
+        viewport.onInit()
     })
 
     window.addEventListener('click', mouse => {
-        controller.onClick(mouse)
+        game_logic.onClick(mouse)
+    })
+
+    window.addEventListener('resize', () => {
+        viewport.onResize()
     })
 
     model.setState(STATE_MENU)
 
     let loop = () => {
-        bg.update()
-        bg.render(ctx)
-        view.render(ctx)
+        background.update()
+        background.render(ctx)
+        game_view.render(ctx)
         window.requestAnimationFrame(loop)
     }
     window.requestAnimationFrame(loop)

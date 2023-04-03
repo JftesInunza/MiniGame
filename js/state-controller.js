@@ -24,7 +24,7 @@ class StateController {
     }
 
     onStateChanged() {
-        switch (this.model.viewState) {
+        switch (this.model.state) {
             case STATE_MENU:
                 return this.showDifficultyMenu()
             case STATE_GAME:
@@ -32,7 +32,7 @@ class StateController {
             case STATE_VICTORY:
                 return this.showVictory()
             default:
-                console.log(`Unknown State ${this.model.viewState}`)
+                console.log(`Unknown State ${this.model.state}`)
         }
     }
 

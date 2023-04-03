@@ -17,6 +17,7 @@ class GameMenu {
             }
             this.currentMode = mode.value
             this.model.init(mode.value)
+            this.model.setState(STATE_GAME)
         })
     }
 }

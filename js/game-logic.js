@@ -33,7 +33,7 @@ class GameLogic {
     }
 
     onClick(event) {
-        if (this.model.viewState != STATE_GAME) {
+        if (this.model.state != STATE_GAME) {
             return
         }
 

@@ -11,7 +11,7 @@ class GameView {
     }
 
     render(ctx) {
-        if (this.model.viewState != STATE_GAME) {
+        if (this.model.state != STATE_GAME) {
             return
         }
 
