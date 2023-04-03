@@ -1,7 +1,7 @@
 'use strict'
 
 
-class Menu {
+class GameMenu {
     constructor(model) {
         this.model = model
         this.modes = document.getElementsByName('mode')
@@ -17,7 +17,6 @@ class Menu {
             }
             this.currentMode = mode.value
             this.model.init(mode.value)
-            this.model.setViewState(STATE_GAME)
         })
     }
 }

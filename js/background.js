@@ -91,7 +91,7 @@ class Background {
     initClouds() {
         this.clouds = []
         for (let i = 0; i < 5; i++) {
-            let posY = 90 + i * ((window.innerHeight) * 2 / 3) / 5
+            let posY = i * ((window.innerHeight) * 2 / 3) / 5
             this.clouds.push(new Cloud(cloud_large(i), posY, this.large_clouds))
         }
         for (let i = 0; i < 7; i++) {

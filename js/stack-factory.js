@@ -4,7 +4,7 @@
 function EmptyStack(length) {
     let empty = []
     for (let i = 0; i < length; i++) {
-        empty.push(STACK_EMPTY)
+        empty.push(NO_MARBLES)
     }
     return empty
 }
@@ -31,7 +31,9 @@ function RandomStacks({
 
     let stacks = []
     for (let i = 0; i < mtype_range + duplicates; i++) {
-        stacks.push(marbles_pool.slice(i * length, (i + 1) * length))
+        const from = i * length
+        const to = (i + 1) * length
+        stacks.push(marbles_pool.slice(from, to))
     }
 
     for (let i = 0; i < n_empty; i++) {
@@ -79,8 +81,8 @@ function NormalMode() {
 function HardMode() {
     return RandomStacks({
         length: 6,
-        mtype_range: 9,
-        n_empty: 3,
-        duplicates: 3,
+        mtype_range: 8,
+        n_empty: 2,
+        duplicates: 4,
     })
 }

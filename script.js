@@ -7,18 +7,24 @@ function main() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    let ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d")
 
-    let model = new Model()
-    let view = new View(model)
-    let bg = new Background()
+    const model = new Model()
+    const view = new GameView(model)
+    const bg = new Background()
+    const sc = new StateController(model)
+    const controller = new GameLogic(model)
 
-    let controller = new Controller(model)
+    model.addEventListener('viewState', () => {
+        sc.onStateChanged()
+    })
+
     window.addEventListener('click', mouse => {
         controller.onClick(mouse)
     })
 
-    model.setViewState(STATE_MENU)
+    model.setState(STATE_MENU)
+
     let loop = () => {
         bg.update()
         bg.render(ctx)

@@ -4,12 +4,9 @@ body {
     padding: 0;
     width: 100%;
     overflow: hidden;
+    user-select: none;
 }
 
 .resources {
-    display: none;
-}
-
-.attributions {
     display: none;
 }

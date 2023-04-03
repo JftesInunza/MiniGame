@@ -4,32 +4,10 @@
 const COLOR_NO_SELECTED = '#146C94'
 const COLOR_SELECTED = '#19A7CE'
 
-class View {
+class GameView {
     constructor(model) {
         this.model = model
-        this.viewState = {
-            menu: this.showMenuView,
-            game: this.showGameView,
-            victory: this.showVictoryView,
-        }
         this.marblesImgs = document.querySelector('#marbles')
-        this.model.addEventListener('viewState', () => { this.viewState[this.model.viewState]() })
-    }
-
-    showGameView() {
-        console.log('game view')
-        document.querySelector('#menu-view').style.display = 'none'
-        document.querySelector('.menu').style.display = 'block'
-    }
-
-    showMenuView() {
-        console.log('menu view')
-        document.querySelector('#menu-view').style.display = 'block'
-        document.querySelector('.menu').style.display = 'none'
-    }
-
-    showVictoryView() {
-        console.log('victory view')
     }
 
     render(ctx) {
@@ -43,7 +21,7 @@ class View {
             this.drawStack(ctx, stackRect)
 
             stack.forEach((mtype, marbles_id) => {
-                if (mtype === STACK_EMPTY) {
+                if (mtype === NO_MARBLES) {
                     return
                 }
                 this.drawMarbles(ctx, mtype, marbles_id, stackRect)

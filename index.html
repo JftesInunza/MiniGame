@@ -8,21 +8,28 @@
     <title>Mini Game</title>
 
     <!-- Classes -->
-    <script src="js/memory.js"></script>
-    <script src="js/model.js"></script>
-    <script src="js/view.js"></script>
-    <script src="js/controller.js"></script>
-    <script src="js/stack_factory.js"></script>
-    <script src="js/menu.js"></script>
-    <script src="js/background.js"></script>
+    <script src="js/memory.js" defer></script>
+    <script src="js/model.js" defer></script>
+    <script src="js/game-view.js" defer></script>
+    <script src="js/game-logic.js" defer></script>
+    <script src="js/stack-factory.js" defer></script>
+    <script src="js/game-menu.js" defer></script>
+    <script src="js/background.js" defer></script>
+    <script src="js/state-controller.js" defer></script>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/game-view.css">
     <link rel="stylesheet" href="css/menu-view.css">
+    <link rel="stylesheet" href="css/attribution.css">
+
+    <!-- Scripts -->
     <script src="script.js"></script>
 </head>
 
+
 <body>
+    <!-- Difficulty Menu -->
     <div id="menu-view">
         <h3>Select Difficulty</h3>
         <div class="mode-selector">
@@ -38,22 +45,40 @@
         <button id="start-btn">Start</button>
     </div>
 
+    <!-- Game Menu -->
     <div class="menu">
-        <input type="image" src="images/menu.svg" id="menu-btn">
-        <input type="image" src="images/restart.svg" id="restart-btn">
-        <input type="image" src="images/undo.svg" id="undo-btn">
+        <input type="image" src="images/menu.svg" id="menu-btn" draggable="false">
+        <input type="image" src="images/restart.svg" id="restart-btn" draggable="false">
+        <input type="image" src="images/undo.svg" id="undo-btn" draggable="false">
     </div>
+
+    <!-- Canvas -->
     <div id="game-view">
         <canvas id="canvas"></canvas>
     </div>
 
-    <div class="attributions">
-        <a href="https://www.vecteezy.com/free-vector/cloud-silhouette">Cloud Silhouette Vectors by Vecteezy</a>
-        <a href="https://www.vecteezy.com/free-vector/star-sky">Star Sky Vectors by Vecteezy</a>
+    <!-- Attribution Button -->
+    <div class="attr-btn">
+        <input type="checkbox" name="attr-btn" id="attr-btn">
+        <label for="attr-btn">
+            <img src="images/attr-icon.png" alt="attr-btn" draggable="false">
+        </label>
     </div>
 
+
+    <!-- Attributions -->
+    <div class="attributions" id="attr">
+        <div class="attr-container" id="attr-container">
+            <a href="https://www.vecteezy.com/free-vector/cloud-silhouette">Cloud Silhouette Vectors by Vecteezy</a>
+            <a href="https://www.vecteezy.com/free-vector/star-sky">Star Sky Vectors by Vecteezy</a>
+            <a href="https://www.vecteezy.com/free-vector/marbles-balls">Marbles Balls Vectors by Vecteezy</a>
+            <a href="https://www.vecteezy.com/free-vector/attribution">Attribution Vectors by Vecteezy</a>
+        </div>
+    </div>
+
+    <!-- Image Resources -->
     <div class="resources">
-        <img src="images/marbles.png" alt="marbles-assets" id="marbles">
+        <img src="images/marbles-sprites.png" alt="marbles-assets" id="marbles">
         <img src="images/sky.jpg" alt="sky-bg" id="sky-bg">
         <img src="images/cloud-small-sprites.png" alt="small-cloud-sprites" id="small-clouds">
         <img src="images/cloud-medium-sprites.png" alt="medium-cloud-sprites" id="medium-clouds">

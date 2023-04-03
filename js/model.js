@@ -4,26 +4,20 @@ const STATE_MENU = 'menu'
 const STATE_GAME = 'game'
 const STATE_VICTORY = 'victory'
 const NO_SELECTION = -1
-const STACK_EMPTY = -1
-const STACK_FULL = 0
+const NO_MARBLES = -1
 const TOP_FORWARD = 1
 const TOP_BACKWARD = -1
 const BOX = {
     margin: 5,
-    sWidth: 88,         // Sprite Width
-    sHeight: 82,        // Sprite Height
-    width: 65,          // pixel widt h
-    height: 62,         // pixel height
+    sWidth: 64,         // Sprite Width
+    sHeight: 64,        // Sprite Height
+    width: 64,          // pixel width
+    height: 64,         // pixel height
 }
 
 class Model {
     constructor() {
         this.listeners = { viewState: [] }
-    }
-
-    setViewState(state) {
-        this.viewState = state
-        this.notify('viewState')
     }
 
     addEventListener(event, callback) {
@@ -44,6 +38,7 @@ class Model {
         this.topIndices = this.initTopIndices()
         this.stackSelected = NO_SELECTION
         this.calcRects()
+        this.setState(STATE_GAME)
     }
 
     forStack(callback) {
@@ -55,7 +50,7 @@ class Model {
     initTopIndices() {
         return this.stacks.map(stack => {
             for (let i = 0; i < stack.length; i++) {
-                if (stack[i] != STACK_EMPTY) {
+                if (stack[i] != NO_MARBLES) {
                     return i
                 }
             }
@@ -94,20 +89,12 @@ class Model {
         return this.topMarbles(s1) == this.topMarbles(s2)
     }
 
-    isStackFull(stack_id) {
-        return this.topIndices[stack_id] == STACK_FULL
-    }
-
-    isStackEmpty(stack_id) {
-        return this.topIndices[stack_id] == this.stackLength
-    }
-
     topMarbles(stack_id) {
         return this.stacks[stack_id][this.topIndices[stack_id]]
     }
 
     setTopEmpty(stack_id) {
-        this.stacks[stack_id][this.topIndices[stack_id]] = STACK_EMPTY
+        this.stacks[stack_id][this.topIndices[stack_id]] = NO_MARBLES
         this.topIndices[stack_id] += TOP_FORWARD
     }
 
@@ -116,10 +103,21 @@ class Model {
         this.stacks[stack_id][this.topIndices[stack_id]] = mtype
     }
 
+    setState(state) {
+        this.viewState = state
+        this.notify('viewState')
+    }
+
     moveMarbles(from, to) {
         const mtype = this.topMarbles(from)
         this.setTopEmpty(from)
         this.setTopBackward(to, mtype)
+    }
+
+    isGameCompleted() {
+        return this.stacks.every((stack, id) => {
+            return this.isStackEmpty(id)
+        })
     }
 
     isStackCompleted(stack_id) {
@@ -127,6 +125,14 @@ class Model {
         return stack.every(mtype => {
             return mtype == stack[0]
         })
+    }
+
+    isStackFull(stack_id) {
+        return this.topIndices[stack_id] == 0
+    }
+
+    isStackEmpty(stack_id) {
+        return this.topIndices[stack_id] == this.stackLength
     }
 
     removeStack(stack_id) {

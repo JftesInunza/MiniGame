@@ -1,11 +1,11 @@
 'use strict'
 
 
-class Controller {
+class GameLogic {
     constructor(model) {
         this.model = model
         this.memory = new Memory()
-        this.menu = new Menu(model)
+        this.menu = new GameMenu(model)
         this.connectButtons()
     }
 
@@ -20,7 +20,7 @@ class Controller {
     }
 
     onMenu() {
-        this.model.setViewState(STATE_MENU)
+        this.model.setState(STATE_MENU)
     }
 
     onRestart() {
@@ -109,5 +109,10 @@ class Controller {
         }
         this.memory.clean()
         this.model.removeStack(stack_id)
+
+        if (this.model.isGameCompleted()) {
+            console.log('Juego Terminado')
+            this.model.setState(STATE_VICTORY)
+        }
     }
 }
