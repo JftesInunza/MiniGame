@@ -26,6 +26,7 @@ class GameLogic {
     onRestart() {
         this.memory.clean()
         this.model.init(this.menu.currentMode)
+        this.model.setState(STATE_GAME)
     }
 
     onUndo() {
