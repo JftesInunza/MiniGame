@@ -19,7 +19,7 @@ class Model {
     constructor() {
         this.listeners = {
             state: [],
-            init: [],
+            resize: [],
         }
     }
 
@@ -40,7 +40,7 @@ class Model {
         this.stackLength = generator.stackLength
         this.topIndices = this.initTopIndices()
         this.stackSelected = NO_SELECTION
-        this.notify('init')
+        this.notify('resize')
     }
 
     forStack(callback) {
@@ -122,6 +122,6 @@ class Model {
         this.stacks.splice(stack_id, 1)
         this.topIndices.splice(stack_id, 1)
         this.numberStacks--
-        this.calcRects()
+        this.notify('resize')
     }
 }

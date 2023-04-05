@@ -20,7 +20,7 @@ function main() {
         state_ctrl.onStateChanged()
     })
 
-    model.addEventListener('init', () => {
+    model.addEventListener('resize', () => {
         viewport.onInit()
     })
 
