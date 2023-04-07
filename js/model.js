@@ -37,7 +37,6 @@ class Model {
         this.stacks = generator.stacks
         this.numberStacks = generator.numberStacks
         this.stackLength = generator.stackLength
-        this.topIndices = this.initTopIndices()
         this.stackSelected = NO_SELECTION
         this.notify('resize')
     }
@@ -48,39 +47,46 @@ class Model {
         }
     }
 
-    initTopIndices() {
-        return this.stacks.map(stack => {
-            for (let i = 0; i < stack.length; i++) {
-                if (!stack[i].isEmpty()) {
-                    return i
-                }
-            }
-            return stack.length
+    stackRect(index) {
+        return this.stacks[index].rect
+    }
+
+    moveMarbles(from, to) {
+        const mtype = this.stacks[from].topMarbleType()
+        this.stacks[from].setTopEmpty()
+        this.stacks[to].setTopMarbleType(mtype)
+    }
+
+    isGameCompleted() {
+        return this.stacks.every((stack) => {
+            return stack.isEmpty()
         })
     }
 
-    stackRect(id) {
-        return this.rects[id]
+    isStackCompleted(index) {
+        return this.stacks[index].isCompleted()
+    }
+
+    isStackFull(index) {
+        return this.stacks[index].isFull()
+    }
+
+    isStackEmpty(index) {
+        return this.stacks[index].isEmpty()
+    }
+
+    isStackSelected() {
+        return this.stackSelected !== NO_SELECTION
     }
 
     compareTypes(s1, s2) {
-        let result = this.topMarbles(s1).equals(this.topMarbles(s2))
-        console.log(result)
-        return result
+        return this.stacks[s1].equalsTopMarble(this.stacks[s2])
     }
 
-    topMarbles(stackID) {
-        return this.stacks[stackID][this.topIndices[stackID]]
-    }
-
-    setTopEmpty(stackID) {
-        this.topMarbles(stackID).setEmpty()
-        this.topIndices[stackID] += TOP_FORWARD
-    }
-
-    setTopBackward(stackID, mtype) {
-        this.topIndices[stackID] += TOP_BACKWARD
-        this.topMarbles(stackID).setType(mtype)
+    setRects(rects) {
+        this.stacks.forEach((stack, i) => {
+            stack.rect = rects[i]
+        })
     }
 
     setState(state) {
@@ -92,43 +98,8 @@ class Model {
         this.stackSelected = NO_SELECTION
     }
 
-    moveMarbles(from, to) {
-        const aux = this.topMarbles(from).mtype
-        this.setTopEmpty(from)
-        this.setTopBackward(to, aux)
-        console.log(aux)
-        console.log(this.stacks, this.topIndices)
-    }
-
-    isGameCompleted() {
-        return this.stacks.every((stack, id) => {
-            return this.isStackEmpty(id)
-        })
-    }
-
-    isStackCompleted(stack_id) {
-        const stack = this.stacks[stack_id]
-        const topMarbles = stack[0]
-        return stack.every(marbles => {
-            return marbles.equals(topMarbles)
-        })
-    }
-
-    isStackFull(stackID) {
-        return this.topIndices[stackID] == 0
-    }
-
-    isStackEmpty(stackID) {
-        return this.topIndices[stackID] == this.stackLength
-    }
-
-    isStackSelected() {
-        return this.stackSelected !== NO_SELECTION
-    }
-
-    removeStack(stack_id) {
-        this.stacks.splice(stack_id, 1)
-        this.topIndices.splice(stack_id, 1)
+    removeStack(index) {
+        this.stacks.splice(index, 1)
         this.numberStacks--
         this.notify('resize')
     }

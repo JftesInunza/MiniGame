@@ -15,9 +15,9 @@ class GameView {
             return
         }
 
-        this.model.forStack((stack, stack_id) => {
-            const rect = this.model.stackRect(stack_id)
-            this.selectStackColorFill(ctx, stack_id)
+        this.model.forStack((stack, i) => {
+            const rect = this.model.stackRect(i)
+            this.selectStackColorFill(ctx, i)
             this.drawStack(ctx, rect)
 
             stack.forEach((marbles, i) => {
@@ -36,12 +36,12 @@ class GameView {
         }
     }
 
-    drawStack(ctx, stackRect) {
+    drawStack(ctx, rect) {
         ctx.fillRect(
-            stackRect.x,
-            stackRect.y,
-            stackRect.width,
-            stackRect.height
+            rect.x,
+            rect.y,
+            rect.width,
+            rect.height
         )
     }
 

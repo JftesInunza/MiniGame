@@ -2,12 +2,12 @@
 
 
 function EmptyStack(length) {
-    let empty = []
+    let marbles = []
     for (let i = 0; i < length; i++) {
-        let marbles = new Marbles(NO_MARBLES)
-        empty.push(marbles)
+        let marble = EmptyMarble()
+        marbles.push(marble)
     }
-    return empty
+    return new Stack(marbles)
 }
 
 function RandomStacks({
@@ -22,21 +22,23 @@ function RandomStacks({
     */
     let marbles_pool = []
     for (let i = 0; i < length * mtype_range; i++) {
-        let marbles = new Marbles(i % mtype_range)
-        marbles_pool.push(marbles)
+        let marble = new Marble(i % mtype_range)
+        marbles_pool.push(marble)
     }
 
     for (let i = 0; i < length * duplicates; i++) {
-        let marbles = new Marbles(i % duplicates)
-        marbles_pool.push(marbles)
+        let marble = new Marble(i % duplicates)
+        marbles_pool.push(marble)
     }
+    // Shuffle marbles
     marbles_pool.sort(() => { return Math.random() - 0.5 })
 
     let stacks = []
     for (let i = 0; i < mtype_range + duplicates; i++) {
         const from = i * length
         const to = (i + 1) * length
-        stacks.push(marbles_pool.slice(from, to))
+        let marbles = marbles_pool.slice(from, to)
+        stacks.push(new Stack(marbles))
     }
 
     for (let i = 0; i < n_empty; i++) {

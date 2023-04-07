@@ -40,13 +40,11 @@ class GameLogic {
 
         const x = mouse.clientX
         const y = mouse.clientY
-        this.model.forStack((stack, id) => {
-            const rect = this.model.stackRect(id)
-            if (!this.isStackCliked(x, y, rect)) {
-                return
+        this.model.forStack((stack, i) => {
+            if (this.isStackCliked(x, y, stack.rect)) {
+                this.onStackSelected(i)
             }
-
-            this.onStackSelected(id)
+            return
         })
     }
 
@@ -59,11 +57,9 @@ class GameLogic {
     onStackSelected(stackID) {
         if (!this.model.isStackSelected()) {
             this.model.stackSelected = stackID
-            console.log(`stack selected ${stackID}`)
 
         } else if (this.model.stackSelected === stackID) {
             this.model.unselectStack()
-            console.log(`stack unselected ${stackID}`)
 
         } else {
             this.moveMarbles(this.model.stackSelected, stackID)
@@ -73,7 +69,6 @@ class GameLogic {
     }
 
     moveMarbles(from, to) {
-        console.log(`trying to move from ${from} to ${to}...`)
         while (this.isValidMovement(from, to)) {
             this.model.moveMarbles(from, to)
             this.memory.addMovement(from, to)
@@ -90,41 +85,31 @@ class GameLogic {
 
     isValidMovement(from, to) {
         if (this.model.isStackFull(to)) {
-            console.log('target full: not valid.')
             return false
         }
 
         if (this.model.isStackEmpty(from)) {
-            console.log('origin empty: not valid.')
             return false
         }
 
         if (this.model.isStackEmpty(to)) {
-            console.log('target empty: valid.')
             return true
         }
 
-        let result = this.model.compareTypes(from, to)
-        if (result) {
-            console.log('same top type: valid.')
-        } else {
-            console.log('different top types: not valid.')
-        }
-        return result
+        return this.model.compareTypes(from, to)
     }
 
-    onStackCompleted(stack_id) {
-        if (!this.model.isStackFull(stack_id)) {
+    onStackCompleted(stackID) {
+        if (!this.model.isStackFull(stackID)) {
             return
         }
-        if (!this.model.isStackCompleted(stack_id)) {
+        if (!this.model.isStackCompleted(stackID)) {
             return
         }
         this.memory.clean()
-        this.model.removeStack(stack_id)
+        this.model.removeStack(stackID)
 
         if (this.model.isGameCompleted()) {
-            console.log('Juego Terminado')
             this.model.setState(STATE_VICTORY)
         }
     }

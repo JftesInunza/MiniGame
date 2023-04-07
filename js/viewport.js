@@ -10,7 +10,7 @@ class Viewport {
     onInit() {
         this.computeSizes()
         this.computeRects()
-        this.model.rects = this.rects
+        this.model.setRects(this.rects)
     }
 
     onResize() {
@@ -35,9 +35,9 @@ class Viewport {
     }
 
     computeRects() {
-        this.rects = this.model.stacks.map((stack, id) => {
+        this.rects = this.model.stacks.map((stack, i) => {
             return {
-                x: this.margin.left + id * (BOX.width + 2 * BOX.margin),
+                x: this.margin.left + i * (BOX.width + 2 * BOX.margin),
                 y: this.margin.top,
                 width: BOX.width,
                 height: (BOX.height + 2 * BOX.margin) * stack.length,
