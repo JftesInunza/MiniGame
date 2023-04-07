@@ -4,7 +4,6 @@ const STATE_MENU = 'menu'
 const STATE_GAME = 'game'
 const STATE_VICTORY = 'victory'
 const NO_SELECTION = -1
-const NO_MARBLES = -1
 const TOP_FORWARD = 1
 const TOP_BACKWARD = -1
 const BOX = {
@@ -52,7 +51,7 @@ class Model {
     initTopIndices() {
         return this.stacks.map(stack => {
             for (let i = 0; i < stack.length; i++) {
-                if (stack[i] != NO_MARBLES) {
+                if (!stack[i].isEmpty()) {
                     return i
                 }
             }
@@ -65,21 +64,23 @@ class Model {
     }
 
     compareTypes(s1, s2) {
-        return this.topMarbles(s1) == this.topMarbles(s2)
+        let result = this.topMarbles(s1).equals(this.topMarbles(s2))
+        console.log(result)
+        return result
     }
 
-    topMarbles(stack_id) {
-        return this.stacks[stack_id][this.topIndices[stack_id]]
+    topMarbles(stackID) {
+        return this.stacks[stackID][this.topIndices[stackID]]
     }
 
-    setTopEmpty(stack_id) {
-        this.stacks[stack_id][this.topIndices[stack_id]] = NO_MARBLES
-        this.topIndices[stack_id] += TOP_FORWARD
+    setTopEmpty(stackID) {
+        this.topMarbles(stackID).setEmpty()
+        this.topIndices[stackID] += TOP_FORWARD
     }
 
-    setTopBackward(stack_id, mtype) {
-        this.topIndices[stack_id] += TOP_BACKWARD
-        this.stacks[stack_id][this.topIndices[stack_id]] = mtype
+    setTopBackward(stackID, mtype) {
+        this.topIndices[stackID] += TOP_BACKWARD
+        this.topMarbles(stackID).setType(mtype)
     }
 
     setState(state) {
@@ -87,14 +88,16 @@ class Model {
         this.notify('state')
     }
 
-    setRects(rects) {
-        this.rects = rects
+    unselectStack() {
+        this.stackSelected = NO_SELECTION
     }
 
     moveMarbles(from, to) {
-        const mtype = this.topMarbles(from)
+        const aux = this.topMarbles(from).mtype
         this.setTopEmpty(from)
-        this.setTopBackward(to, mtype)
+        this.setTopBackward(to, aux)
+        console.log(aux)
+        console.log(this.stacks, this.topIndices)
     }
 
     isGameCompleted() {
@@ -105,17 +108,22 @@ class Model {
 
     isStackCompleted(stack_id) {
         const stack = this.stacks[stack_id]
-        return stack.every(mtype => {
-            return mtype == stack[0]
+        const topMarbles = stack[0]
+        return stack.every(marbles => {
+            return marbles.equals(topMarbles)
         })
     }
 
-    isStackFull(stack_id) {
-        return this.topIndices[stack_id] == 0
+    isStackFull(stackID) {
+        return this.topIndices[stackID] == 0
     }
 
-    isStackEmpty(stack_id) {
-        return this.topIndices[stack_id] == this.stackLength
+    isStackEmpty(stackID) {
+        return this.topIndices[stackID] == this.stackLength
+    }
+
+    isStackSelected() {
+        return this.stackSelected !== NO_SELECTION
     }
 
     removeStack(stack_id) {

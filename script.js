@@ -10,11 +10,11 @@ function main() {
     const ctx = canvas.getContext("2d")
 
     const model = new Model()
-    const game_view = new GameView(model)
+    const viewport = new Viewport(model, canvas)
+    const game_view = new GameView(model, viewport)
     const background = new Background()
     const state_ctrl = new StateController(model)
     const game_logic = new GameLogic(model)
-    const viewport = new Viewport(model, canvas)
 
     model.addEventListener('state', () => {
         state_ctrl.onStateChanged()

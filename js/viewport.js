@@ -10,7 +10,7 @@ class Viewport {
     onInit() {
         this.computeSizes()
         this.computeRects()
-        this.model.setRects(this.rects)
+        this.model.rects = this.rects
     }
 
     onResize() {

@@ -5,9 +5,9 @@ const COLOR_NO_SELECTED = '#146C94'
 const COLOR_SELECTED = '#19A7CE'
 
 class GameView {
-    constructor(model) {
+    constructor(model, viewport) {
         this.model = model
-        this.marblesImgs = document.querySelector('#marbles')
+        this.viewport = viewport
     }
 
     render(ctx) {
@@ -16,15 +16,14 @@ class GameView {
         }
 
         this.model.forStack((stack, stack_id) => {
-            const stackRect = this.model.stackRect(stack_id)
+            const rect = this.model.stackRect(stack_id)
             this.selectStackColorFill(ctx, stack_id)
-            this.drawStack(ctx, stackRect)
+            this.drawStack(ctx, rect)
 
-            stack.forEach((mtype, marbles_id) => {
-                if (mtype === NO_MARBLES) {
-                    return
-                }
-                this.drawMarbles(ctx, mtype, marbles_id, stackRect)
+            stack.forEach((marbles, i) => {
+                marbles.x = rect.x
+                marbles.y = rect.y + i * (BOX.height + BOX.margin * 2)
+                marbles.draw(ctx)
             })
         });
     }
@@ -43,20 +42,6 @@ class GameView {
             stackRect.y,
             stackRect.width,
             stackRect.height
-        )
-    }
-
-    drawMarbles(ctx, mtype, id, stackRect) {
-        const sx = mtype * BOX.sWidth                                           //The x coordinate where to start clipping
-        const sy = 0                                                            //The y coordinate where to start clipping
-        const swidth = BOX.sWidth                                               //The width of the clipped image
-        const sheight = BOX.sHeight                                             //The height of the clipped image
-        const x = stackRect.x                                                   //The x coordinate where to place the image on the canvas
-        const y = stackRect.y + id * (BOX.height + BOX.margin * 2)              //The y coordinate where to place the image on the canvas
-        const width = BOX.width                                                 //The width of the image to use (stretch or reduce the image)
-        const height = BOX.height                                               //The height of the image to use (stretch or reduce the image)
-        ctx.drawImage(
-            this.marblesImgs, sx, sy, swidth, sheight, x, y, width, height
         )
     }
 

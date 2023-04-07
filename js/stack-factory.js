@@ -4,7 +4,8 @@
 function EmptyStack(length) {
     let empty = []
     for (let i = 0; i < length; i++) {
-        empty.push(NO_MARBLES)
+        let marbles = new Marbles(NO_MARBLES)
+        empty.push(marbles)
     }
     return empty
 }
@@ -21,11 +22,13 @@ function RandomStacks({
     */
     let marbles_pool = []
     for (let i = 0; i < length * mtype_range; i++) {
-        marbles_pool.push(i % mtype_range)
+        let marbles = new Marbles(i % mtype_range)
+        marbles_pool.push(marbles)
     }
 
     for (let i = 0; i < length * duplicates; i++) {
-        marbles_pool.push(i % duplicates)
+        let marbles = new Marbles(i % duplicates)
+        marbles_pool.push(marbles)
     }
     marbles_pool.sort(() => { return Math.random() - 0.5 })
 
