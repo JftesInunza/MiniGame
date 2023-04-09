@@ -45,11 +45,7 @@ function RandomStacks({
         stacks.push(EmptyStack(length))
     }
 
-    return {
-        stacks: stacks,
-        numberStacks: mtype_range + n_empty + duplicates,
-        stackLength: length,
-    }
+    return stacks
 }
 
 function GenerateStacks(mode) {

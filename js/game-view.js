@@ -5,9 +5,8 @@ const COLOR_NO_SELECTED = '#146C94'
 const COLOR_SELECTED = '#19A7CE'
 
 class GameView {
-    constructor(model, viewport) {
+    constructor(model) {
         this.model = model
-        this.viewport = viewport
     }
 
     render(ctx) {
@@ -16,15 +15,9 @@ class GameView {
         }
 
         this.model.forStack((stack, i) => {
-            const rect = this.model.stackRect(i)
             this.selectStackColorFill(ctx, i)
-            this.drawStack(ctx, rect)
-
-            stack.forEach((marbles, i) => {
-                marbles.x = rect.x
-                marbles.y = rect.y + i * (BOX.height + BOX.margin * 2)
-                marbles.draw(ctx)
-            })
+            this.drawStack(ctx, stack.rect)
+            stack.draw(ctx)
         });
     }
 

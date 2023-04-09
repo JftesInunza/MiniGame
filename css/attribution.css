@@ -43,6 +43,10 @@
     width: 64px;
 }
 
+.attr-btn label:hover {
+    cursor: pointer;
+}
+
 .attr-btn img {
     height: 85%;
     left: 50%;

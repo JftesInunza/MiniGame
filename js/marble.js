@@ -4,7 +4,7 @@
 const MARBLES_SPRITES = document.getElementById('marbles')
 const MARBLES_SWIDTH = 64
 const MARBLES_SHEIGHT = 64
-const NO_MARBLE = -1
+const EMPTY_MARBLE = -1
 
 
 class Marble {
@@ -19,11 +19,11 @@ class Marble {
     }
 
     isEmpty() {
-        return this.mtype === NO_MARBLE
+        return this.mtype === EMPTY_MARBLE
     }
 
     setEmpty() {
-        this.mtype = NO_MARBLE
+        this.mtype = EMPTY_MARBLE
     }
 
     setType(mtype) {
@@ -44,7 +44,7 @@ class Marble {
 
     }
 
-    draw(ctx) {
+    draw(ctx, mwidth, mheight) {
         if (this.isEmpty()) {
             return
         }
@@ -57,12 +57,12 @@ class Marble {
             MARBLES_SHEIGHT,
             this.x,
             this.y,
-            this.width,
-            this.height
+            mwidth,
+            mheight
         )
     }
 }
 
 function EmptyMarble() {
-    return new Marble(NO_MARBLE)
+    return new Marble(EMPTY_MARBLE)
 }

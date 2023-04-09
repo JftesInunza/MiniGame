@@ -11,7 +11,7 @@ function main() {
 
     const model = new Model()
     const viewport = new Viewport(model, canvas)
-    const game_view = new GameView(model, viewport)
+    const game_view = new GameView(model)
     const background = new Background()
     const state_ctrl = new StateController(model)
     const game_logic = new GameLogic(model)

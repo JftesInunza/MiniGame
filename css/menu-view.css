@@ -31,6 +31,7 @@
 
 #start-btn:hover {
     color: red;
+    cursor: pointer;
 }
 
 .mode-selector {
@@ -44,7 +45,7 @@
 }
 
 .mode-selector label {
-    background-color: #0e4b67;
+    background-image: linear-gradient(#0e4b67, #092b3b);
     border-radius: 15px;
     box-shadow: 2px 2px 4px gray;
     color: white;
@@ -56,17 +57,18 @@
 }
 
 .mode-selector label:hover {
-    background-color: #19A7CE;
-    color: #1c1946;
+    background-image: linear-gradient(#19A7CE, #073440);
+    color: #120A8F;
+    cursor: pointer;
 }
 
 .mode-selector label:active {
     box-shadow: 0 2px black;
-    color: #1c1946;
+    color: #120A8F;
     transform: translateY(4px);
 }
 
 .mode-selector input[type="radio"]:checked+label {
-    background-color: #19A7CE;
-    color: #1c1946;
+    background-image: linear-gradient(#19A7CE, #073440);
+    color: #120A8F;
 }

@@ -56,14 +56,14 @@ class GameLogic {
 
     onStackSelected(stackID) {
         if (!this.model.isStackSelected()) {
-            this.model.stackSelected = stackID
+            this.model.setSelection(stackID)
 
         } else if (this.model.stackSelected === stackID) {
-            this.model.unselectStack()
+            this.model.deselectStack()
 
         } else {
             this.moveMarbles(this.model.stackSelected, stackID)
-            this.model.unselectStack()
+            this.model.deselectStack()
             this.onStackCompleted(stackID)
         }
     }
@@ -96,7 +96,7 @@ class GameLogic {
             return true
         }
 
-        return this.model.compareTypes(from, to)
+        return this.model.compareTopMarbleStacks(from, to)
     }
 
     onStackCompleted(stackID) {
