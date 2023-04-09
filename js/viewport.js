@@ -20,15 +20,14 @@ class Viewport {
 
     onInit() {
         this.setResolution()
-        this.computeSizes()
+        this.computeSize()
         this.computeRects()
-        this.model.setRects(this.rects)
     }
 
-    computeSizes() {
+    computeSize() {
         this.size = {
-            width: this.model.NumberOfStacks() * this.mwidth + 2 * (this.model.NumberOfStacks() - 1) * this.smargin,
-            height: this.mheight * this.model.NumberOfMarblesPerStack(),
+            width: this.model.NumberOfStacks() * (this.mwidth + 2 * this.smargin) / this.rows - 2 * this.smargin,
+            height: this.mheight * this.model.NumberOfMarblesPerStack() * this.rows,
         }
         this.margin = {
             left: (this.canvas.width - this.size.width) / 2,
@@ -37,37 +36,56 @@ class Viewport {
     }
 
     computeRects() {
-        this.rects = this.model.stacks.map((stack, i) => {
-            return {
-                x: this.margin.left + i * (this.mwidth + 2 * this.smargin),
-                y: this.margin.top,
-                width: this.mwidth,
-                height: this.mheight * this.model.NumberOfMarblesPerStack(),
-                mwidth: this.mwidth,
-                mheight: this.mheight,
+        let rects = []
+        const columns = Math.ceil(this.model.NumberOfStacks() / this.rows)
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                const rect = {
+                    x: this.margin.left + j * (this.mwidth + 2 * this.smargin),
+                    y: this.margin.top + (this.mheight + this.smargin) * this.model.NumberOfMarblesPerStack() * i,
+                    width: this.mwidth,
+                    height: this.mheight * this.model.NumberOfMarblesPerStack(),
+                    mwidth: this.mwidth,
+                    mheight: this.mheight,
+                }
+                rects.push(rect)
             }
-        })
+        }
+        this.model.setRects(rects)
     }
 
 
     setMobileViewport() {
         this.mwidth = 32
         this.mheight = 32
+        this.rows = 2
+    }
+
+    setHQViewPort() {
+        this.mwidth = 32
+        this.mheight = 32
+        this.rows = 1
     }
 
     setHDViewport() {
         this.mwidth = 48
         this.mheight = 48
+        this.rows = 1
     }
 
     setFullHDViewport() {
         this.mwidth = 64
         this.mheight = 64
+        this.rows = 1
     }
 
     setResolution() {
-        if (window.innerWidth <= 800) {
+        if (window.innerWidth <= 580) {
             this.setMobileViewport()
+        }
+
+        if (580 < window.innerWidth && window.innerWidth <= 800) {
+            this.setHQViewPort()
         }
 
         if (800 < window.innerWidth && window.innerWidth <= 1030) {
