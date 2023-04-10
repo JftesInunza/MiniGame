@@ -12,10 +12,9 @@ class Viewport {
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
 
-        if (this.model.state == STATE_MENU) {
-            return
+        if (this.model.state == STATE_GAME) {
+            this.onInit()
         }
-        this.onInit()
     }
 
     onInit() {
@@ -38,6 +37,7 @@ class Viewport {
     computeRects() {
         let rects = []
         const columns = Math.ceil(this.model.NumberOfStacks() / this.rows)
+
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < columns; j++) {
                 const rect = {
@@ -54,10 +54,27 @@ class Viewport {
         this.model.setRects(rects)
     }
 
+    setResolution() {
+        if (window.innerWidth <= 580) {
+            this.setMobileViewport()
+        }
+
+        if (580 < window.innerWidth && window.innerWidth <= 800) {
+            this.setHQViewPort()
+        }
+
+        if (800 < window.innerWidth && window.innerWidth <= 1030) {
+            this.setHDViewport()
+        }
+
+        if (window.innerWidth > 1030) {
+            this.setFullHDViewport()
+        }
+    }
 
     setMobileViewport() {
-        this.mwidth = 32
-        this.mheight = 32
+        this.mwidth = 40
+        this.mheight = 40
         this.rows = 2
     }
 
@@ -77,24 +94,6 @@ class Viewport {
         this.mwidth = 64
         this.mheight = 64
         this.rows = 1
-    }
-
-    setResolution() {
-        if (window.innerWidth <= 580) {
-            this.setMobileViewport()
-        }
-
-        if (580 < window.innerWidth && window.innerWidth <= 800) {
-            this.setHQViewPort()
-        }
-
-        if (800 < window.innerWidth && window.innerWidth <= 1030) {
-            this.setHDViewport()
-        }
-
-        if (window.innerWidth > 1030) {
-            this.setFullHDViewport()
-        }
     }
 
 }
